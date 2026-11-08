@@ -12,6 +12,6 @@ try{
  const clear=await crypto.subtle.decrypt({name:'AES-GCM',iv:payload.slice(0,12)},key,payload.slice(12));
  const frame=document.createElement('iframe');frame.title='生日礼物';frame.setAttribute('sandbox','allow-scripts');frame.setAttribute('allow','autoplay');frame.srcdoc=new TextDecoder().decode(clear);
  frame.addEventListener('load',()=>document.getElementById('loading')?.remove(),{once:true});document.body.appendChild(frame);
-}catch(error){title.textContent='暂时没有打开成功';status.textContent='请使用收到的完整链接，在最新版 Safari、Chrome 或 Edge 浏览器中重新打开。网络较慢时可以稍后刷新。'}
+}catch(error){console.error('Gift load:',error.name,error.message);title.textContent='暂时没有打开成功';status.textContent='请使用收到的完整链接，在最新版 Safari、Chrome 或 Edge 浏览器中重新打开。网络较慢时可以稍后刷新。'}
 })();
 </script></body></html>

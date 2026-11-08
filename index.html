@@ -1,0 +1,17 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow,noarchive"><meta name="referrer" content="no-referrer"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'self'; frame-src 'self' about:; img-src data:; media-src data:; base-uri 'none'; form-action 'none'"><title>一份专属礼物</title><style>*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;background:#060b16;color:#dae8ef;font-family:system-ui,'Microsoft YaHei',sans-serif}#loading{position:fixed;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:28px;background:radial-gradient(ellipse at center,#1e3049,#060b16 70%)}h1{font-size:25px;font-weight:400;letter-spacing:3px}p{font-size:13px;line-height:2;color:#9eb2c5;max-width:400px}.star{font-size:45px;color:#e0c7a6;animation:pulse 2s infinite}iframe{display:block;border:0;width:100%;height:100%;height:100dvh}@keyframes pulse{50%{opacity:.3;transform:scale(.8)}}</style></head><body><div id="loading"><div class="star">✧</div><h1 id="title">正在拆开这份礼物</h1><p id="status">首次打开需要加载照片和音乐，请稍等片刻。</p></div><script>
+(async()=>{
+const status=document.getElementById('status'),title=document.getElementById('title');
+try{
+ const secret=new URLSearchParams(location.hash.slice(1)).get('k');
+ if(!secret||!/^[a-f0-9]{64}$/i.test(secret)){title.textContent='这是一份专属礼物';status.textContent='需要收到的完整链接才能打开。请检查是否漏掉了链接末尾的内容。';return}
+ if(!crypto.subtle)throw new Error('browser');
+ const request=await fetch('gift.bin',{cache:'no-store',credentials:'omit',referrerPolicy:'no-referrer'});if(!request.ok)throw new Error('network');
+ const payload=new Uint8Array(await request.arrayBuffer());
+ const bytes=Uint8Array.from(secret.match(/../g),x=>parseInt(x,16));
+ const key=await crypto.subtle.importKey('raw',bytes,{name:'AES-GCM'},false,['decrypt']);
+ const clear=await crypto.subtle.decrypt({name:'AES-GCM',iv:payload.slice(0,12)},key,payload.slice(12));
+ const frame=document.createElement('iframe');frame.title='生日礼物';frame.setAttribute('sandbox','allow-scripts');frame.setAttribute('allow','autoplay');frame.srcdoc=new TextDecoder().decode(clear);
+ frame.addEventListener('load',()=>document.getElementById('loading')?.remove(),{once:true});document.body.appendChild(frame);
+}catch(error){title.textContent='暂时没有打开成功';status.textContent='请使用收到的完整链接，在最新版 Safari、Chrome 或 Edge 浏览器中重新打开。网络较慢时可以稍后刷新。'}
+})();
+</script></body></html>

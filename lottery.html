@@ -10,6 +10,7 @@
 .wheel::after{background:repeating-conic-gradient(from -22.5deg,transparent 0deg 44.6deg,#ffe9c3 44.6deg 45deg)}
 .label{width:72px;margin-left:-36px;margin-top:-22px;font-size:11px;transform:rotate(var(--angle)) translateY(-116px) rotate(calc(-1 * var(--angle)))}
 .label i{font-size:22px;margin-bottom:2px}.label small{display:block;font-size:8px;font-weight:400;margin-top:3px;color:#fff0d5}
+.reveal-stage{min-height:84px;display:grid;place-items:center;margin:0 auto}.bloom{opacity:0;transform:scale(.25);filter:blur(8px);color:#ffe2a7;font-size:48px;line-height:1;transition:opacity .45s,transform .7s cubic-bezier(.16,1.4,.3,1),filter .55s;text-shadow:0 0 24px #ffe1a7}.bloom.show{opacity:1;transform:scale(1);filter:blur(0)}.bloom small{display:block;margin-top:8px;color:#fff2e1;text-shadow:none;text-align:center;font:12px system-ui;letter-spacing:2px}.message{opacity:1;transition:opacity .35s,transform .45s}.message.waiting{opacity:0;transform:translateY(8px)}.award-items span{opacity:0;transform:scale(.35) translateY(12px)}.award.blooming .award-items span{animation:gift-pop .6s cubic-bezier(.16,1.5,.35,1) forwards}.award.blooming .award-items span:nth-child(2){animation-delay:.14s}.award.blooming .award-items span:nth-child(3){animation-delay:.28s}.award.blooming .award-items span:nth-child(4){animation-delay:.42s}.award.blooming .award-items span:nth-child(5){animation-delay:.56s}@keyframes gift-pop{to{opacity:1;transform:scale(1) translateY(0)}}.award .award-copy{opacity:1;transition:opacity .5s}.award.blooming .award-copy{opacity:0}
 .prize-detail{font-size:11px;color:#dbc7b5;margin:0 auto 12px;line-height:1.8}.wheel-area{width:352px;height:352px;max-width:86vw;max-height:86vw}
 .pointer{filter:drop-shadow(0 2px 7px #f5d490)}.spinning .pointer{animation:tick .16s ease-in-out infinite alternate}@keyframes tick{to{transform:translateX(-50%) rotate(-9deg)}}
 .award{display:none;border:1px solid #e7bf76;padding:19px 15px;margin:16px auto;background:linear-gradient(130deg,#593348,#3b3023);box-shadow:0 0 35px #e8bd6b25;max-width:450px}.award.show{display:block;animation:pagein .8s ease both}.award h2{font-family:serif;color:#ffe1a4;margin:0 0 12px;font-size:26px}.award-items{display:flex;justify-content:center;gap:18px;flex-wrap:wrap}.award-items span{font-size:12px}.award-items b{display:block;font-size:28px;margin-bottom:6px}.award p{font-size:12px;line-height:1.9;color:#e5d3c0;margin-bottom:0}
@@ -20,12 +21,12 @@
 <main><section class="page active" id="game"><div class="content"><p class="eyebrow">A WHEEL OF BIRTHDAY WISHES</p><h1 class="title">小陆同学，生日快乐</h1><p class="blessing">愿新的一岁，有鲜花、有甜意，<br>也有很多很多值得期待的好事。</p><p class="instruction">转动三次生日幸运转盘，看看好运最后落在哪里。</p>
 <div class="wheel-area" aria-label="生日幸运转盘"><div class="wheel-border"></div><div class="wheel-window"><div class="wheel" id="wheel"><div class="label" style="--angle:0deg"><i>💐</i>鲜花</div><div class="label" style="--angle:45deg"><i>☁</i>谢谢惠顾</div><div class="label" style="--angle:90deg"><i>🎂</i>蛋糕</div><div class="label" style="--angle:135deg"><i>↻</i>再来一次</div><div class="label" style="--angle:180deg"><i>🎟️</i>刮刮乐</div><div class="label" style="--angle:225deg"><i>🫶</i>拥抱券</div><div class="label" style="--angle:270deg"><i>💌</i>对象</div><div class="label" style="--angle:315deg"><i>♛</i>特等奖<small>全部礼物</small></div></div></div><div class="pointer"></div><div class="hub">LUCKY<br>25</div></div>
 <p class="prize-detail">特等奖：鲜花 + 蛋糕 + 刮刮乐 + 拥抱券 + 对象</p>
-<button class="spin" id="spin">转动幸运转盘</button><div class="count" aria-label="抽奖次数"><span id="c1">1</span><span id="c2">2</span><span id="c3">3</span></div><p class="message" id="message" aria-live="polite">小陆同学，今天的幸运会是什么呢？<br>轻点按钮，试试手气。</p>
-<div class="award" id="award"><h2>♛ 特等奖 · 全部送给你</h2><div class="award-items"><span><b>💐</b>鲜花</span><span><b>🎂</b>蛋糕</span><span><b>🎟️</b>刮刮乐</span><span><b>🫶</b>拥抱券</span><span><b>💌</b>对象</span></div><p>愿你有花可赏，有甜可尝，有好运常伴。<br>还有一个人，想认真陪你走过往后的日子。</p></div></div></section>
+<div class="reveal-stage" aria-live="polite"><div class="bloom" id="bloom"></div></div><button class="spin" id="spin">转动幸运转盘</button><div class="count" aria-label="抽奖次数"><span id="c1">1</span><span id="c2">2</span><span id="c3">3</span></div><p class="message" id="message">小陆同学，今天的幸运会是什么呢？<br>轻点按钮，试试手气。</p>
+<div class="award" id="award"><h2>♛ 特等奖 · 全部送给你</h2><div class="award-items"><span><b>💐</b>鲜花</span><span><b>🎂</b>蛋糕</span><span><b>🎟️</b>刮刮乐</span><span><b>🫶</b>拥抱券</span><span><b>💌</b>对象</span></div><p class="award-copy">愿你有花可赏，有甜可尝，有好运常伴。<br>还有一个人，想认真陪你走过往后的日子。</p></div></div></section>
 <section class="page" id="letter"><div class="content"><p class="eyebrow">THE GRAND PRIZE · 心里话</p><h2 class="title">特等奖的奖品是——<br>全部，还有我。</h2><article class="letter-wrap"><p>鲜花、蛋糕、刮刮乐，今天的生日礼物都想送给你。还有一份我藏在心里的心愿，也想趁着今天，认真告诉你。</p><p>隔了几年再次遇见你，我才明白，有些人即使走过很长的时间，还是会被放在心上。我不想再错过你，也不想只在回忆里想念你。</p><p class="big">漫长的岁月里，<br>我只想和你在一起。</p><p>如果你愿意，我想从现在开始重新牵起你的手。往后的日子，无论平凡还是热闹，我都想陪你一起经历；好好珍惜你，认真爱你，不轻易放手。</p><p>这份心意没有附带期限，也不需要你立刻回答。你可以慢慢感受、慢慢决定。我只是希望你知道：这一次，我真的不想再错过你。</p><p class="sign">生日快乐。愿你的新一岁被温柔与欢喜围绕。<br>也愿未来的某一天，我们能并肩走很久。</p></article><button class="again" id="again">回到幸运转盘</button></div></section></main>
 <script>
 (() => {
- const wheel=document.getElementById('wheel'),spin=document.getElementById('spin'),message=document.getElementById('message'),game=document.getElementById('game'),letter=document.getElementById('letter');
+ const wheel=document.getElementById('wheel'),spin=document.getElementById('spin'),message=document.getElementById('message'),bloom=document.getElementById('bloom'),award=document.getElementById('award'),game=document.getElementById('game'),letter=document.getElementById('letter');
  let round=0,angle=0,busy=false;
  const outcomes=[
   {stop:315,text:'谢谢惠顾 · 哎呀，第一下扑了个空。没关系，生日的好心情可不能跟着溜走。'},
@@ -44,12 +45,17 @@
   const outcome=outcomes[round],remainder=((outcome.stop-angle%360)+360)%360;
   angle+=360*6+remainder;wheel.style.transform=`rotate(${angle}deg)`;
   setTimeout(()=>{
-   round++;game.classList.remove('spinning');document.getElementById('c'+round).classList.add('done');message.textContent=outcome.text;
+   round++;game.classList.remove('spinning');document.getElementById('c'+round).classList.add('done');
+   bloom.innerHTML=round===1?'☁<small>谢谢惠顾</small>':round===2?'↻<small>再来一次</small>':'♛<small>特等奖 · 全部礼物</small>';
+   bloom.classList.remove('show');message.classList.add('waiting');
+   requestAnimationFrame(()=>requestAnimationFrame(()=>bloom.classList.add('show')));
    if(round===3){
-    document.getElementById('c3').classList.add('jackpot');message.classList.add('win');document.getElementById('award').classList.add('show');confetti();spin.textContent='还有一封信，想念给你听 →';
+    document.getElementById('c3').classList.add('jackpot');award.classList.add('show','blooming');confetti();
+    setTimeout(()=>{message.innerHTML=outcome.text;message.classList.add('win');message.classList.remove('waiting');award.classList.remove('blooming');spin.textContent='还有一封信，想念给你听 →';spin.disabled=false;busy=false;},1750);
     spin.onclick=()=>{game.classList.remove('active');letter.classList.add('active');window.scrollTo(0,0)};
-   }else{spin.textContent=round===1?'再试一次 →':'用掉这次机会 →'}
-   spin.disabled=false;busy=false;
+   }else{
+    setTimeout(()=>{message.textContent=outcome.text;message.classList.remove('waiting');spin.textContent=round===1?'再试一次 →':'用掉这次机会 →';spin.disabled=false;busy=false;},1050);
+   }
   },5150);
  }
  spin.onclick=spinOnce;document.getElementById('again').onclick=()=>location.reload();
